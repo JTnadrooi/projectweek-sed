@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types=1); // makes type casting more strict.
 
 session_start();
 require 'config.php';
