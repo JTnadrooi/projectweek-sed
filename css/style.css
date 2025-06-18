@@ -1,0 +1,25 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #B5DC9A;
+    position: relative;
+    bottom: 5%;
+}
+
+button{
+    background-color: #FAE527;
+    width: 100px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+input{
+    width: 25lh;
+    height: 25px;
+}
+
+div{
+    margin-top: 10lh;
+}
