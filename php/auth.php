@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 session_start();
 require 'config.php';
 
@@ -6,25 +9,25 @@ $mode = $_GET['action'] ?? 'login';
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
+    $username = trim($_POST['username'] ?? ''); // get variables from form.
     $password = $_POST['password'] ?? '';
 
     if (!$username || !$password) $message = 'All fields required.';
-    elseif ($mode === 'register') {
+    elseif ($mode === 'register') { // registering
         try {
-            $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)')->execute([$username, $password]);
-            $message = 'Registered! Please login.';
+            $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)')->execute([$username, $password]); // add new user.
+            $message = 'Registered! Please login.'; // only shows is above line succeeds.
             $mode = 'login';
-        } catch (PDOException $e) {
+        } catch (PDOException $e) { // when INSERT fails.
             $message = $e->getCode() === '23000' ? 'Username already exists.' : 'Registration error.';
         }
-    } else {
-        $stmt = $pdo->prepare('SELECT username, password FROM users WHERE username = ?');
+    } else { // login.
+        $stmt = $pdo->prepare('SELECT username, password FROM users WHERE username = ?'); // fetch user
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if ($user && $password === $user['password']) {
-            $_SESSION['username'] = $user['username'];
+        if ($user && $password === $user['password']) { // if password matches and user exists
+            $_SESSION['username'] = $user['username']; // store to session.
             header('Location: dashboard.php');
             exit;
         } else $message = 'Invalid login.';
