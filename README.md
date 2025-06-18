@@ -1,3 +1,3 @@
 # Projectweek-SED
 
-Repository for the final 2025 projectweek.
+Repository for the SED projectweek.
