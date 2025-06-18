@@ -9,6 +9,7 @@ if (empty($_SESSION['username'])) {
 }
 ?>
 
+<link rel="stylesheet" href="../css/style.css">
 <h1>Dashboard</h1>
 <p>Welcome, <?= htmlspecialchars($_SESSION['username']) ?></p>
 <p><a href="logout.php">Logout</a></p>
