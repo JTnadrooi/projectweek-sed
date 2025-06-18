@@ -2,53 +2,45 @@
 session_start();
 require 'config.php';
 
-$action = $_GET['action'] ?? 'login';
-$msg = '';
+$mode = $_GET['action'] ?? 'login';
+$message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $u = trim($_POST['username'] ?? '');
-    $p = $_POST['password'] ?? '';
-    if (!$u || !$p) {
-        $msg = 'All fields required.';
-    } elseif ($action === 'register') {
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if (!$username || !$password) $message = 'All fields required.';
+    elseif ($mode === 'register') {
         try {
-            $stmt = $pdo->prepare('INSERT INTO users (username,password) VALUES (?,?)');
-            $stmt->execute([$u, $p]);
-            $msg = 'Registered! Please login.';
-            $action = 'login';
+            $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)')->execute([$username, $password]);
+            $message = 'Registered! Please login.';
+            $mode = 'login';
         } catch (PDOException $e) {
-            if ($e->getCode() === '23000') {
-                $msg = 'Username already exists.';
-            } else {
-                $msg = 'Registration error.';
-            }
+            $message = $e->getCode() === '23000' ? 'Username already exists.' : 'Registration error.';
         }
     } else {
-        $stmt = $pdo->prepare('SELECT username,password FROM users WHERE username=?');
-        $stmt->execute([$u]);
+        $stmt = $pdo->prepare('SELECT username, password FROM users WHERE username = ?');
+        $stmt->execute([$username]);
         $user = $stmt->fetch();
-        if ($user && $p === $user['password']) {
+
+        if ($user && $password === $user['password']) {
             $_SESSION['username'] = $user['username'];
             header('Location: dashboard.php');
             exit;
-        } else {
-            $msg = 'Invalid login.';
-        }
+        } else $message = 'Invalid login.';
     }
 }
 ?>
 
-<h1><?= ucfirst($action) ?></h1>
-<?= $msg ? "<p>$msg</p>" : '' ?>
+<h1><?= ucfirst($mode) ?></h1>
+<?= $message ? "<p>$message</p>" : '' ?>
 <form method="post">
     <input name="username" placeholder="Username" required><br>
     <input type="password" name="password" placeholder="Password" required><br>
-    <button><?= ucfirst($action) ?></button>
+    <button><?= ucfirst($mode) ?></button>
 </form>
 <p>
-    <?php if ($action === 'login'): ?>
-        <a href="?action=register">Register</a>
-    <?php else: ?>
-        <a href="?action=login">Login</a>
-    <?php endif; ?>
+    <a href="?action=<?= $mode === 'login' ? 'register' : 'login' ?>">
+        <?= $mode === 'login' ? 'Register' : 'Login' ?>
+    </a>
 </p>
