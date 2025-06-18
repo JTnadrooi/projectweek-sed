@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS `sed-projectweek`;
+
+USE `sed-projectweek`;
+
 CREATE TABLE
     IF NOT EXISTS `users` (
         `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -5,7 +9,6 @@ CREATE TABLE
         `password` VARCHAR(50) NOT NULL
     ) ENGINE = InnoDB;
 
--- optional test user (username: test, password: pass)
 INSERT INTO
     `users` (`username`, `password`)
 VALUES
