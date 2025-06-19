@@ -49,4 +49,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </a>
 </p>
 </div>
-<img src="../Images/Green_Energy.jpg">
+<img src="../img/green_energy.jpg">
