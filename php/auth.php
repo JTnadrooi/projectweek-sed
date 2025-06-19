@@ -48,4 +48,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?= $mode === 'login' ? 'No account yet? Click here!' : 'Already have an account? Click here!' ?>
     </a>
 </p>
-<div>
+</div>
+<img src="../Images/Green_Energy.jpg">
