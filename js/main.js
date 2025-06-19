@@ -51,3 +51,22 @@ class accountManager {
         return this.accounts.map(acc => acc.getUsername());
     }
 }
+
+let button = document.getElementById('addAccountButton');
+button.addEventListener('click', () => {
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let email = document.getElementById('email').value;
+
+    if (username && password && email) {
+        let newAccount = new account();
+        newAccount.setUsername(username);
+        newAccount.setPassword(password);
+        newAccount.setEmail(email);
+
+        accountManagerInstance.addAccount(newAccount);
+        alert('account gemaakt!');
+    } else {
+        alert('shijf alles nog');
+    }
+});
