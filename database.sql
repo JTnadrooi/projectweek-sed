@@ -13,3 +13,10 @@ INSERT INTO
     `users` (`username`, `password`)
 VALUES
     ('test', 'pass');
+
+CREATE TABLE
+    energy_usage (
+        usage_date DATE PRIMARY KEY,
+        total_energy_kwh DECIMAL(10, 2),
+        peak_usage_kwh DECIMAL(10, 2)
+    );
