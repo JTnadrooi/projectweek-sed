@@ -16,7 +16,7 @@ $energyData = $stmt->fetchAll();
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <title>Energy Usage Dashboard</title>
     <style>
         .chart-container {
@@ -29,11 +29,13 @@ $energyData = $stmt->fetchAll();
     </style>
 </head>
 <body>
+    <header>
     <h1>Dashboard</h1>
     <p>Welcome, <?= htmlspecialchars($_SESSION['username']) ?></p>
-    <p><a href="logout.php">Logout</a></p>
+    <p><a id="logout" href="logout.php">Logout</a></p>
+    </header>
 
-
+    <article><br><br>
         <h2>Daily Energy Usage</h2>
         <canvas id="energyChart" width="800" height="400"></canvas>
 
@@ -58,5 +60,6 @@ $energyData = $stmt->fetchAll();
         const energyData = <?= json_encode($energyData) ?>;
     </script>
     <script src="../js/main.js"></script>
+        </article>
 </body>
 </html>

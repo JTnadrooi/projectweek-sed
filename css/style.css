@@ -42,17 +42,3 @@ img {
     box-sizing: border-box;
 }
 
-    .chart-container {
-        width: 90%;
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 30px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-        .energyChart {
-        width: 100%;
-        height: 500px;
-    }
