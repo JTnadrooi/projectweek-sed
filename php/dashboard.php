@@ -13,23 +13,50 @@ $stmt = $pdo->query("SELECT usage_date, total_energy_kwh, peak_usage_kwh FROM en
 $energyData = $stmt->fetchAll();
 ?>
 
-<link rel="stylesheet" href="../css/style.css">
-<h1>Dashboard</h1>
-<p>Welcome, <?= htmlspecialchars($_SESSION['username']) ?></p>
-<p><a href="logout.php">Logout</a></p>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Energy Usage Dashboard</title>
+    <style>
+        .chart-container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <p>Welcome, <?= htmlspecialchars($_SESSION['username']) ?></p>
+    <p><a href="logout.php">Logout</a></p>
 
-<h2>Daily Energy Usage</h2>
-<table border="1" cellpadding="5" cellspacing="0">
-    <tr>
-        <th>Date</th>
-        <th>Total Energy (kWh)</th>
-        <th>Peak Usage (kWh)</th>
-    </tr>
-    <?php foreach ($energyData as $row): ?>
+
+        <h2>Daily Energy Usage</h2>
+        <canvas id="energyChart" width="800" height="400"></canvas>
+
+<div class="chart-container"></div>
+
+    <table border="1" cellpadding="5" cellspacing="0">
         <tr>
-            <td><?= htmlspecialchars($row['usage_date']) ?></td>
-            <td><?= htmlspecialchars($row['total_energy_kwh']) ?></td>
-            <td><?= htmlspecialchars($row['peak_usage_kwh']) ?></td>
+            <th>Date</th>
+            <th>Total Energy (kWh)</th>
+            <th>Peak Usage (kWh)</th>
         </tr>
-    <?php endforeach; ?>
-</table>
+        <?php foreach ($energyData as $row): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['usage_date']) ?></td>
+                <td><?= htmlspecialchars($row['total_energy_kwh']) ?></td>
+                <td><?= htmlspecialchars($row['peak_usage_kwh']) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <script>
+        const energyData = <?= json_encode($energyData) ?>;
+    </script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
