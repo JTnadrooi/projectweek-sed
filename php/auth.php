@@ -36,16 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <link rel="stylesheet" href="../css/style.css">
 <div>
-<h1><?= ucfirst($mode) ?></h1>
-<?= $message ? "<p>$message</p>" : '' ?>
-<form method="post">
-    <input name="username" placeholder="Username" required><br><br>
-    <input type="password" name="password" placeholder="Password" required><br><br>
-    <button><?= ucfirst($mode) ?></button>
-</form>
-<p>
-    <a href="?action=<?= $mode === 'login' ? 'register' : 'login' ?>">
-        <?= $mode === 'login' ? 'No account yet? Click here!' : 'Already have an account? Click here!' ?>
-    </a>
-</p>
-<div>
+    <h1><?= ucfirst($mode) ?></h1>
+    <?= $message ? "<p>$message</p>" : '' ?>
+    <form method="post">
+        <input name="username" placeholder="Username" required><br><br>
+        <input type="password" name="password" placeholder="Password" required><br><br>
+        <button><?= ucfirst($mode) ?></button>
+    </form>
+    <p>
+        <a href="?action=<?= $mode === 'login' ? 'register' : 'login' ?>">
+            <?= $mode === 'login' ? 'No account yet? Click here!' : 'Already have an account? Click here!' ?>
+        </a>
+    </p>
+</div>
