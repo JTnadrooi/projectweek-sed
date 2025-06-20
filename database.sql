@@ -1,28 +1,35 @@
-CREATE DATABASE IF NOT EXISTS `sed-projectweek`;
+DROP DATABASE IF EXISTS `sed-projectweek`;
+
+CREATE DATABASE `sed-projectweek`;
 
 USE `sed-projectweek`;
 
+DROP TABLE IF EXISTS `users`;
+
 CREATE TABLE
-    IF NOT EXISTS `users` (
+    `users` (
         `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         `username` VARCHAR(50) NOT NULL UNIQUE,
-        `password` VARCHAR(50) NOT NULL
-    ) ENGINE = InnoDB;
+        `password` VARCHAR(50) NOT NULL,
+        `layout` INT (11) DEFAULT 0
+    );
 
 INSERT INTO
     `users` (`username`, `password`)
 VALUES
     ('test', 'pass');
 
+DROP TABLE IF EXISTS `energy_usage`;
+
 CREATE TABLE
-    energy_usage (
-        usage_date DATE PRIMARY KEY,
-        total_energy_kwh DECIMAL(10, 2),
-        peak_usage_kwh DECIMAL(10, 2)
+    `energy_usage` (
+        `usage_date` DATE PRIMARY KEY,
+        `total_energy_kwh` DECIMAL(10, 2),
+        `peak_usage_kwh` DECIMAL(10, 2)
     );
 
 INSERT INTO
-    energy_usage (usage_date, total_energy_kwh, peak_usage_kwh)
+    `energy_usage` (usage_date, total_energy_kwh, peak_usage_kwh)
 VALUES
     ('2025-06-01', 120.5, 60.2),
     ('2025-06-02', 115.3, 58.0),
