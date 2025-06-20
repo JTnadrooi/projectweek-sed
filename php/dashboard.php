@@ -18,15 +18,6 @@ $energyData = $pdo->query("SELECT usage_date, total_energy_kwh, peak_usage_kwh F
 <head>
     <!-- <link rel="stylesheet" href="../css/dashboard.css"> -->
     <title>Energy Usage Dashboard</title>
-    <style>
-        .chart-container {
-            margin: 20px 0;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 
 <body>
