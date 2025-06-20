@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<link rel="stylesheet" href="../css/style.css">
+<!-- <link rel="stylesheet" href="../css/style.css"> -->
 <div>
     <h1><?= ucfirst($mode) ?></h1>
     <?= $message ? "<p>$message</p>" : '' ?>

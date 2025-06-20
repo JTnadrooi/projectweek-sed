@@ -17,7 +17,7 @@ $energyData = $stmt->fetchAll();
 <html>
 
 <head>
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <!-- <link rel="stylesheet" href="../css/dashboard.css"> -->
     <title>Energy Usage Dashboard</title>
     <style>
         .chart-container {
