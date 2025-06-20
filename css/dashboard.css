@@ -19,12 +19,12 @@
     }
 
     header{
-        background-color: #6EAB45;
-        color: white;
+        background-color: #9fd17e;
+        color: rgb(0, 0, 0);
     }
 
     article{
-        background-color: #B5DC9A;
+        background-color: #c0e8a4;
     }
 
     #logout{
@@ -34,7 +34,7 @@
         text-decoration: none;
         color: black;
         float: right;
-        margin-top: 0lh;
+        margin-top: -40px;
         padding: 0;
         height: 30px;
         width: 70px;
