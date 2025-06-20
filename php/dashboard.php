@@ -51,51 +51,7 @@ $latest      = $energyData[0] ?? ['usage_date' => '', 'total_energy_kwh' => 0, '
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Energy Usage Dashboard</title>
-    <style>
-        .dashboard {
-            padding: 1rem;
-        }
-
-        .layout-0 .chart-section,
-        .layout-0 .widgets {
-            width: 100%;
-        }
-
-        .layout-1 {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .layout-1 .chart-section {
-            flex: 2;
-        }
-
-        .layout-1 .widgets {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .layout-2 {
-            display: flex;
-            flex-direction: column-reverse;
-            gap: 1rem;
-        }
-
-        .widgets {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .widget {
-            border: 1px solid #ccc;
-            padding: 0.5rem;
-            border-radius: 4px;
-            flex: 1 1 200px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 
 <body>
