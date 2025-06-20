@@ -9,8 +9,7 @@ if (empty($_SESSION['username'])) {
 }
 require 'config.php';
 
-$stmt = $pdo->query("SELECT usage_date, total_energy_kwh, peak_usage_kwh FROM energy_usage ORDER BY usage_date DESC");
-$energyData = $stmt->fetchAll();
+$energyData = $pdo->query("SELECT usage_date, total_energy_kwh, peak_usage_kwh FROM energy_usage ORDER BY usage_date DESC")->fetchAll();
 ?>
 
 <!DOCTYPE html>
