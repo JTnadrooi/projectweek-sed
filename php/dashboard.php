@@ -10,7 +10,7 @@ if (empty($_SESSION['username'])) {
 
 require 'config.php';
 
-// Process layout change
+// process layout change.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['layout'])) {
     $newLayout = (int)$_POST['layout'];
     $stmt = $pdo->prepare("UPDATE users SET layout = :layout WHERE username = :username");
@@ -20,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['layout'])) {
     ]);
 }
 
-// Fetch updated layout
+// fetch updated layout.
 $stmt = $pdo->prepare("SELECT layout FROM users WHERE username = :username");
 $stmt->execute(['username' => $_SESSION['username']]);
 $user = $stmt->fetch();
 $layout = $user['layout'] ?? 0;
 
-// Fetch energy data
+// fetch energy data.
 $energyData = $pdo->query("SELECT usage_date, total_energy_kwh, peak_usage_kwh FROM energy_usage ORDER BY usage_date DESC")->fetchAll();
 ?>
 
