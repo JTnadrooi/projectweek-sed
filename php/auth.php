@@ -37,10 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="../css/style.css">
 <div>
     <h1><?= ucfirst($mode) ?></h1>
-    <?= $message ? "<p>$message</p>" : '' ?>
+    <?= $message ? "<p>$message</p>" : '' ?><br><br>
     <form method="post">
         <input name="username" placeholder="Username" required><br><br>
-        <input type="password" name="password" placeholder="Password" required><br><br>
+        <input type="password" name="password" placeholder="Password" required><br><br><br><br>
         <button><?= ucfirst($mode) ?></button>
     </form>
     <p>
@@ -49,4 +49,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </p>
 </div>
-<img src="../img/green_energy.jpg">
