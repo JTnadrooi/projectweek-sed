@@ -20,7 +20,7 @@
 }
 
 header {
-    background-color: #6eab45;
+    background-color: #3066a3;
     color: white;
     padding: 10px;
 }
@@ -87,6 +87,6 @@ article {
     padding: 0.5rem;
     border-radius: 4px;
     flex: 1 1 200px;
-    background-color: #b5dc9a;
+    background-color: #ffb949;
 }
 
