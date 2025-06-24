@@ -12,10 +12,21 @@ const xyValues = [
   {x:150, y:15}
 ];
 
-window.currentChartType = "line";
-window.chartTypes = ["line", "bar", "scatter"];
+window.currentChartType = "bar";
+window.chartTypes = [
+    "bar",
+    "line",      
+    "doughnut",
+    "pie",
+    "radar",
+    "polarArea"
+];
 
 function renderChart(canvasId, chartData, layout) {
+    const canvas = document.getElementById(canvasId);
+    canvas.width = 800;
+    canvas.height = 400;
+
     const labels = chartData.map(entry => entry.usage_date);
     const totalEnergy = chartData.map(entry => parseFloat(entry.total_energy_kwh));
     const peakUsage = chartData.map(entry => parseFloat(entry.peak_usage_kwh));
@@ -24,35 +35,88 @@ function renderChart(canvasId, chartData, layout) {
         window.myChartInstance.destroy();
     }
 
-    let datasets = [
-        {
-            label: "Total Energy (kWh)",
-            data: window.currentChartType === "scatter"
-                ? chartData.map(entry => ({x: entry.usage_date, y: parseFloat(entry.total_energy_kwh)}))
-                : totalEnergy,
-            borderColor: "rgba(0,123,255,1)",
-            backgroundColor: "rgba(0,123,255,0.2)",
-            fill: false,
-            showLine: window.currentChartType === "scatter" ? false : true
+    let datasets;
+    if (["doughnut", "pie", "polarArea"].includes(window.currentChartType)) {
+        datasets = [
+            {
+                label: "Total Energy (kWh)",
+                data: totalEnergy,
+                backgroundColor: [
+                    "rgba(0,123,255,0.5)",
+                    "rgba(255,99,132,0.5)",
+                    "rgba(255,206,86,0.5)",
+                    "rgba(75,192,192,0.5)",
+                    "rgba(153,102,255,0.5)",
+                    "rgba(255,159,64,0.5)"
+                ]
+            }
+        ];
+    } else if (window.currentChartType === "radar") {
+        datasets = [
+            {
+                label: "Total Energy (kWh)",
+                data: totalEnergy,
+                borderColor: "rgba(0,123,255,1)",
+                backgroundColor: "rgba(0,123,255,0.2)",
+                fill: true
+            }
+        ];
+        if (layout !== 2) {
+            datasets.push({
+                label: "Peak Usage (kWh)",
+                data: peakUsage,
+                borderColor: "rgba(255,99,132,1)",
+                backgroundColor: "rgba(255,99,132,0.2)",
+                fill: true
+            });
         }
-    ];
-    if (layout !== 2) {
-        datasets.push({
-            label: "Peak Usage (kWh)",
-            data: window.currentChartType === "scatter"
-                ? chartData.map(entry => ({x: entry.usage_date, y: parseFloat(entry.peak_usage_kwh)}))
-                : peakUsage,
-            borderColor: "rgba(255,99,132,1)",
-            backgroundColor: "rgba(255,99,132,0.2)",
-            fill: false,
-            showLine: window.currentChartType === "scatter" ? false : true
-        });
+    } else if (window.currentChartType === "line") {
+        datasets = [
+            {
+                label: "Total Energy (kWh)",
+                data: totalEnergy,
+                borderColor: "rgba(0,123,255,1)",
+                backgroundColor: "rgba(0,123,255,0.2)",
+                fill: false,
+                tension: 0.3
+            }
+        ];
+        if (layout !== 2) {
+            datasets.push({
+                label: "Peak Usage (kWh)",
+                data: peakUsage,
+                borderColor: "rgba(255,99,132,1)",
+                backgroundColor: "rgba(255,99,132,0.2)",
+                fill: false,
+                tension: 0.3
+            });
+        }
+    } else {
+        // bar and other types
+        datasets = [
+            {
+                label: "Total Energy (kWh)",
+                data: totalEnergy,
+                borderColor: "rgba(0,123,255,1)",
+                backgroundColor: "rgba(0,123,255,0.2)",
+                fill: false
+            }
+        ];
+        if (layout !== 2) {
+            datasets.push({
+                label: "Peak Usage (kWh)",
+                data: peakUsage,
+                borderColor: "rgba(255,99,132,1)",
+                backgroundColor: "rgba(255,99,132,0.2)",
+                fill: false
+            });
+        }
     }
 
     window.myChartInstance = new Chart(document.getElementById(canvasId), {
         type: window.currentChartType,
         data: {
-            labels: window.currentChartType === "scatter" ? undefined : labels.reverse(),
+            labels: labels.reverse(),
             datasets: datasets
         },
         options: {
@@ -60,10 +124,10 @@ function renderChart(canvasId, chartData, layout) {
             plugins: {
                 legend: { display: true }
             },
-            scales: {
-                x: window.currentChartType === "scatter"
-                    ? { type: "category", title: { display: true, text: "Date" } }
-                    : { title: { display: true, text: "Date" } },
+            scales: (
+                ["doughnut", "pie", "polarArea"].includes(window.currentChartType)
+            ) ? {} : {
+                x: { title: { display: true, text: "Date" } },
                 y: { title: { display: true, text: "kWh" } }
             }
         }
@@ -75,12 +139,11 @@ if (window.energyData && typeof userLayout !== "undefined") {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    const btn = document.getElementById("switchChartType");
-    if (btn) {
-        btn.addEventListener("click", function() {
-            // Cycle through chart types: line -> bar -> scatter -> line ...
-            const idx = window.chartTypes.indexOf(window.currentChartType);
-            window.currentChartType = window.chartTypes[(idx + 1) % window.chartTypes.length];
+    const chartTypeSelect = document.getElementById("chartType");
+    if (chartTypeSelect) {
+        chartTypeSelect.value = window.currentChartType;
+        chartTypeSelect.addEventListener("change", function() {
+            window.currentChartType = this.value;
             renderChart("energyChart", window.energyData, window.userLayout);
         });
     }
