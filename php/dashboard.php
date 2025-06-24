@@ -77,12 +77,24 @@ $latest      = $energyData[0] ?? ['usage_date' => '', 'total_energy_kwh' => 0, '
 
         <div class="chart-section">
             <h2>Daily Energy Usage</h2>
+            <form id="chartTypeForm" style="margin-bottom:10px;">
+                <label for="chartType">Chart Type:</label>
+                <select id="chartType" name="chartType">
+                    <option value="bar">Bar</option>
+                    <option value="line">Line</option>
+                    <option value="doughnut">Doughnut</option>
+                    <option value="pie">Pie</option>
+                    <option value="radar">Radar</option>
+                    <option value="polarArea">Polar Area</option>
+                </select>
+            </form>
             <canvas id="energyChart" width="800" height="400"></canvas>
             <script>
-                const energyData = <?= json_encode($energyData) ?>;
-                const userLayout = <?= json_encode($layout) ?>;
+                window.energyData = <?= json_encode($energyData) ?>;
+                window.userLayout = <?= json_encode($layout) ?>;
             </script>
-            <script src="../js/main.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="../js/widget.js"></script>
         </div>
 
         <div class="widgets">
